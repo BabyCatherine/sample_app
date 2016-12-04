@@ -28,7 +28,7 @@ describe User do
     it { should_not be_valid }
   end
 
-  describe "when email is nor present" do
+  describe "when email is not present" do
     before { @user.email = " " }
     it {should_not be_valid }
   end
@@ -65,7 +65,10 @@ describe User do
   end
 
   describe "when password is not present" do
-    before { @user.password = @user.password_confirmation = " " }
+    before do
+      @user = User.new(name: "Example User", email: "user@example.com",
+                       password: " ", password_confirmation: " ")
+    end
     it { should_not be_valid }
   end
 
@@ -93,5 +96,5 @@ describe User do
       it { should_not eq user_for_invalid_password }
       specify { expect(user_for_invalid_password).to be_false }
     end
-  end
+  end 
 end
