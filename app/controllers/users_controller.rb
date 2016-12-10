@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)    
     if @user.save
+      sign_in @user #Вход пользователя сразу после регистрации
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
     else
