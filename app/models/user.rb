@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	has_many :microposts, dependent: :destroy # Пользователь имеет_много микросообщений., Обеспечение уничтожения микросообщений пользователя вместе с пользователем. 
 	validates :name, presence: true, length: { maximum: 50 }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
@@ -14,6 +15,10 @@ class User < ActiveRecord::Base
 
 	def User.encrypt(token)
 		Digest::SHA1.hexdigest(token.to_s)
+	end
+
+	def feed #Предварительная реализация потока микросообщений
+		Micropost.where("user_id = ?", id) #Знак вопроса в гарантирует, что id корректно маскирован прежде чем быть включенным в лежащий в его основе SQL запрос
 	end
 
 	private

@@ -9,6 +9,11 @@ FactoryGirl.define do
       admin true 
     end
   end
+
+  factory :micropost do #фабрикa для микросообщений, микросообщения связаны с пользователем
+    content "lorem ipsum"
+    user
+  end
 end
 
 #Фабрика для симуляции объектов модели User. 
